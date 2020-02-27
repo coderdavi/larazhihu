@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Topic;
+use App\Question;
+
+/**
+ * Class QuestionRepository
+ * @package App\Repositories
+ */
+class QuestionRepository
+{
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function byIdWithTopicsAndAnswers($id)
+    {
+        return Question::query()->where('id', $id)->with(['topics', 'answers'])->first();
+    }
+
+    /**
+     * @param array $attributes
+     * @return Question|\Illuminate\Database\Eloquent\Model
+     */
+    public function create(array $attributes)
+    {
+        return Question::query()->create($attributes);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function byId($id)
+    {
+        return Question::query()->find($id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuestionsFeed()
+    {
+        return Question::published()->latest('updated_at')->with('user')->get();
+    }
+
+
+    /**
+     * @param array $topics
+     * @return array
+     */
+    public function normalizeTopic(array $topics)
+    {
+        return collect($topics)->map(function ($topic) {
+            if (is_numeric($topic)) {
+                Topic::query()->find($topic)->increment('questions_count');
+                return (int)$topic;
+            }
+            $newTopic = Topic::query()->create(['name' => $topic, 'questions_count' => 1]);
+
+            return $newTopic->id;
+        })->toArray();
+    }
+}
