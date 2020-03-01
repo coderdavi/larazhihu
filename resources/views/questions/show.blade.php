@@ -55,7 +55,7 @@
                         @foreach($question->answers as $answer)
                             <div class="media">
                                 <div class="media-left">
-{{--                                    <user-vote-button answer="{{$answer->id}}" count="{{$answer->votes_count}}"></user-vote-button>--}}
+                                    <user-vote-button answer="{{$answer->id}}" count="{{$answer->votes_count}}"></user-vote-button>
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">
@@ -65,11 +65,11 @@
                                     </h4>
                                     {!! $answer->body !!}
                                 </div>
-{{--                                <comments type="answer"--}}
-{{--                                          model="{{$answer->id}}"--}}
-{{--                                          count="{{$answer->comments()->count()}}">--}}
+                                <comments type="answer"
+                                          model="{{$answer->id}}"
+                                          count="{{$answer->comments()->count()}}">
 
-{{--                                </comments>--}}
+                                </comments>
                             </div>
                         @endforeach
                         @if(Auth::check())
@@ -127,7 +127,7 @@
                             </div>
                         </div>
                         <user-follow-button user="{{$question->user_id}}"></user-follow-button>
-{{--                        <send-message user="{{$question->user_id}}"></send-message>--}}
+                        <send-message user="{{$question->user_id}}"></send-message>
                     </div>
                 </div>
             </div>

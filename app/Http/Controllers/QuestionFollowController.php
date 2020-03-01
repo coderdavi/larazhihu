@@ -42,6 +42,7 @@ class QuestionFollowController extends Controller
         $question = $this->question->byId($request->get('question'));
 
         $followed = Auth::guard('api')->user()->followThis($question->id);
+
         if (count($followed['detached']) > 0) {
             $question->decrement('followers_count');
             return response()->json(['followed' => false]);

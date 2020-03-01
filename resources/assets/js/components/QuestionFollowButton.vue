@@ -11,7 +11,7 @@
     export default {
         props:['question'],
         mounted() {
-            this.axios.post('/api/question/follower',{'question':this.question}).then(response => {
+            axios.post('/api/question/follower',{'question':this.question}).then(response => {
                 this.followed = response.data.followed
             })
         },
@@ -27,7 +27,7 @@
         },
         methods:{
             follow() {
-                this.axios.post('/api/question/follow',{'question':this.question}).then(response => {
+                axios.post('/api/question/follow',{'question':this.question}).then(response => {
                     this.followed = response.data.followed
                 })
             }
